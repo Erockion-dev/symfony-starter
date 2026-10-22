@@ -1,0 +1,11 @@
+{{ form_start(form, {attr: {class: 'space-y-4'}}) }}
+    {{ form_widget(form) }}
+
+    <div class="flex items-center gap-3 pt-2">
+        <button type="submit"
+                class="btn btn-primary">
+            {{ button_label|default('Save') }}
+        </button>
+        <a href="{{ path('app_dashboard_admin_users_index') }}" class="btn-secondary">Cancel</a>
+    </div>
+{{ form_end(form) }}

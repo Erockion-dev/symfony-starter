@@ -1,0 +1,5 @@
+knp_paginator:
+    page_range: 5
+    convert_exception: true
+    template:
+        pagination: 'backoffice/partials/_pagination.html.twig'

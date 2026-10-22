@@ -1,0 +1,56 @@
+services:
+  php:
+    build:
+      context: ./docker/php
+    container_name: symf_starter_php
+    volumes:
+      - ./app:/var/www/html
+    working_dir: /var/www/html
+    depends_on:
+      - postgres
+
+  nginx:
+    image: nginx:alpine
+    container_name: symf_starter_nginx
+    ports:
+      - "8080:80"
+    volumes:
+      - ./app:/var/www/html
+      - ./docker/nginx/default.conf:/etc/nginx/conf.d/default.conf
+    depends_on:
+      - php
+
+  postgres:
+    image: postgres:18
+    container_name: postgres_symf_starter
+    environment:
+      POSTGRES_DB: symf_starter
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql
+
+  pgadmin:
+    image: dpage/pgadmin4
+    container_name: pgadmin_symf_starter
+    restart: unless-stopped
+    environment:
+      PGADMIN_DEFAULT_EMAIL: admin@example.com
+      PGADMIN_DEFAULT_PASSWORD: admin
+    ports:
+      - "5050:80"
+    depends_on:
+      - postgres
+
+  node:
+    build: ./docker/node
+    volumes:
+      - ./app:/app
+      - node_modules:/app/node_modules
+    profiles: [front]
+
+volumes:
+  postgres_data:
+  node_modules:

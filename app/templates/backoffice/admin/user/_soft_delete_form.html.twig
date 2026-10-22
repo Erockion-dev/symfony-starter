@@ -1,0 +1,4 @@
+<form method="post" action="{{ path('app_dashboard_admin_users_soft_delete', {'id': user.id}) }}" onsubmit="return confirm('Are you sure you want to delete this item?');">
+    <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ user.id) }}">
+    <button class="cursor-pointer text-red-600 hover:text-red-800">Delete</button>
+</form>

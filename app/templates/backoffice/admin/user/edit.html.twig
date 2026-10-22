@@ -1,0 +1,16 @@
+{% extends 'backoffice/layout.html.twig' %}
+
+{% block title %}Edit User{% endblock %}
+
+{% block content %}
+    <div class="mx-auto max-w-2xl">
+        <h1>Edit User</h1>
+
+        <div class="rounded-lg border bg-white p-6">
+            {{ include('backoffice/admin/user/_form.html.twig', {button_label: 'Update'}) }}
+        </div>
+    </div>
+
+{% endblock %}
+
+

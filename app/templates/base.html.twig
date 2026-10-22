@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>{% block title %}Starter kit Erockion{% endblock %}</title>
+        {% block stylesheets %}{% endblock %}
+        {% block javascripts %}{% endblock %}
+    </head>
+    <body>
+        {% set route = app.request.attributes.get('_route') ?? '' %}
+        {% block body %}{% endblock %}
+    </body>
+</html>

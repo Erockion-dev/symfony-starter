@@ -1,0 +1,73 @@
+{% extends 'backoffice/layout.html.twig' %}
+
+{% block title %}{{ user.firstName }} {{ user.lastName }}{% endblock %}
+
+{% block content %}
+    <div class="mb-4 flex items-center justify-between">
+        <h1>{{ user.firstName }} {{ user.lastName }}</h1>
+        <a href="{{ path('app_dashboard_admin_users_index') }}" class="btn-secondary">Back</a>
+    </div>
+
+    <div class="max-w-2xl overflow-x-auto rounded-lg border bg-white">
+        <table class="min-w-full divide-y divide-gray-100 text-sm">
+            <tbody class="divide-y divide-gray-100">
+                <tr>
+                    <th class="w-1/3 bg-gray-50 px-4 py-3 text-left font-medium text-gray-500">Id</th>
+                    <td class="px-4 py-3 text-gray-900">{{ user.id }}</td>
+                </tr>
+                <tr>
+                    <th class="bg-gray-50 px-4 py-3 text-left font-medium text-gray-500">First name</th>
+                    <td class="px-4 py-3 text-gray-900">{{ user.firstName }}</td>
+                </tr>
+                <tr>
+                    <th class="bg-gray-50 px-4 py-3 text-left font-medium text-gray-500">Last name</th>
+                    <td class="px-4 py-3 text-gray-900">{{ user.lastName }}</td>
+                </tr>
+                <tr>
+                    <th class="bg-gray-50 px-4 py-3 text-left font-medium text-gray-500">Email</th>
+                    <td class="px-4 py-3 text-gray-900">{{ user.email }}</td>
+                </tr>
+                <tr>
+                    <th class="bg-gray-50 px-4 py-3 text-left font-medium text-gray-500">Roles</th>
+                    <td class="px-4 py-3">
+                        {% for role in user.roles %}
+                            <span class="mr-1 inline-block rounded bg-gray-100 px-2 py-0.5 text-xs text-gray-700">
+                                {{ role|replace({'ROLE_': ''})|lower|capitalize }}
+                            </span>
+                        {% endfor %}
+                    </td>
+                </tr>
+                <tr>
+                    <th class="bg-gray-50 px-4 py-3 text-left font-medium text-gray-500">Status</th>
+                    <td class="px-4 py-3">
+                        {% if user.deletedAt %}
+                            <span class="rounded bg-red-100 px-2 py-0.5 text-xs text-red-700">Deleted</span>
+                            {{ user.deletedAt|date('d-m-Y') }}
+                        {% elseif user.isActive %}
+                            <span class="rounded bg-green-100 px-2 py-0.5 text-xs text-green-700">Active</span>
+                        {% else %}
+                            <span class="rounded bg-red-100 px-2 py-0.5 text-xs text-red-700">Inactive</span>
+                        {% endif %}
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div class="mt-6 flex items-center gap-3">
+        <a href="{{ path('app_dashboard_admin_users_edit', {id: user.id}) }}" class="btn-primary">Edit</a>
+        {% if not user.deletedAt %}
+            <form method="post" action="{{ path('app_dashboard_admin_users_soft_delete', {id: user.id}) }}"
+                onsubmit="return confirm('Delete this User ?');">
+                <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ user.id) }}">
+                <button type="submit" class="btn-danger">Delete</button>
+            </form>
+        {% else %}
+            <form method="post" action="{{ path('app_dashboard_admin_users_restore', {id: user.id}) }}">
+                <input type="hidden" name="_token" value="{{ csrf_token('restore' ~ user.id) }}">
+                <button type="submit" class="btn-tertiary">Restore</button>
+            </form>
+        {% endif %}
+        <a href="{{ path('app_dashboard_admin_users_index') }}" class="btn-secondary">Back</a>
+    </div>
+{% endblock %}

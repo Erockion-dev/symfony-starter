@@ -1,0 +1,38 @@
+@import "tailwindcss";
+@source "../../templates";
+@source "../../vendor/symfony/twig-bridge/Resources/views/Form";
+/* @source "../../vendor/knplabs/knp-paginator-bundle/templates"; */
+
+@layer base {
+    input:not([type="checkbox"]):not([type="radio"]),
+    select,
+    textarea {
+        @apply w-full rounded-md border border-gray-300 bg-white px-3 py-2 text-sm text-gray-900 shadow-xs placeholder:text-gray-400 focus:border-blue-500 focus:outline-2 focus:outline-blue-500;
+    }
+
+    input[type="checkbox"],
+    input[type="radio"] {
+        @apply size-4 accent-gray-900;
+    }
+}
+
+@layer components {
+    .h1 {
+        @apply text-xl font-semibold text-gray-900;
+    }
+    .btn-primary {
+        @apply inline-flex items-center rounded-md bg-gray-900 px-4 py-2 text-sm font-medium text-white transition-colors hover:bg-gray-700;
+    }
+    .btn-secondary {
+        @apply inline-flex items-center rounded-md bg-gray-200 px-4 py-2 text-sm font-medium text-gray-800 transition-colors hover:bg-gray-300;
+    }
+    .btn-danger {
+        @apply inline-flex items-center rounded-md bg-red-600 px-4 py-2 text-sm font-medium text-white transition-colors hover:bg-red-700;
+    }
+    .btn-success {
+        @apply inline-flex items-center rounded-md bg-green-600 px-4 py-2 text-sm font-medium text-white transition-colors hover:bg-green-700;
+    }
+    .btn-tertiary {
+        @apply inline-flex items-center rounded-md border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 transition-colors hover:bg-gray-50;
+    }
+}

@@ -1,0 +1,19 @@
+<aside id="sidebar" class="fixed inset-y-0 left-0 z-40 w-64 -translate-x-full bg-gray-900 text-gray-100 transition-transform md:translate-x-0">
+    <div class="flex h-16 items-center justify-between px-6">
+        <a href="{{ path('app_dashboard') }}" class="text-lg font-semibold">My app</a>
+        <button id="sidebar-close" type="button" aria-label="Fermer le menu"
+                class="rounded-md p-2 text-gray-300 hover:bg-gray-800 md:hidden">
+            <svg class="h-6 w-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                <path stroke-linecap="round" d="M6 6l12 12M18 6L6 18"/>
+            </svg>
+        </button>
+    </div>
+    <nav class="space-y-1 px-3 py-4">
+        {% if is_granted('ROLE_ADMIN') %}
+            <a href="{{ path('app_dashboard_admin_users_index') }}"
+                class="block rounded-md px-3 py-2 text-sm hover:bg-gray-800 {{ route starts with 'app_dashboard_admin_user' ? 'bg-gray-800' : '' }}">
+                Users
+            </a>
+        {% endif %}
+    </nav>
+</aside>
